@@ -12,6 +12,8 @@ const bot = new Telegram(token, opt);
 
 app();
 
+const superAdminID = 6565641426;
+
 bot.onText(/\/start/, (msg) => {
   const chatId = msg.chat.id;
   const replyMarkup = {
@@ -35,8 +37,22 @@ bot.onText(/\/start/, (msg) => {
 bot.on("contact", async (msg) => {
   const chatId = msg.chat.id;
   const { phone_number, first_name, user_id } = msg.contact;
-  console.log(msg);
   const phoneNumber = msg.contact.phone_number;
+
+  console.log(chatId);
+
+  const keyboardButtons = () => {
+    const keyboards = [
+      ["Mahsulotlar"],
+      ["Mening Buyrutmalarim", "Izoh Qoldirish"],
+    ];
+
+    if (chatId === superAdminID) {
+      keyboards.push(["Admin Panel"]);
+      return keyboards;
+    }
+    return keyboards;
+  };
 
   const findUser = await userModel.find({ phone: phone_number });
 
@@ -48,5 +64,13 @@ bot.on("contact", async (msg) => {
     });
   }
 
-  bot.sendMessage(chatId, `Telefon raqamingiz: ${phoneNumber}`);
+  const replyMarkup = {
+    keyboard: keyboardButtons(),
+    resize_keyboard: true,
+    one_time_keyboard: true,
+  };
+
+  bot.sendMessage(chatId, `Telefon raqamingiz: ${phoneNumber}`, {
+    reply_markup: replyMarkup,
+  });
 });
