@@ -1,3 +1,4 @@
+import {model, Schema} from "mongoose"
 
 const productSchame =  new Schema({
     image:{
@@ -8,11 +9,14 @@ const productSchame =  new Schema({
     },
     buyedCount:{
         type:number
+    },
+    userID:{type:Number
     }
 },
 { timestamps: true }
 )
 
-const userModel = model('users', productSchame);
+const productModel = model('product', productSchame);
 
-module.exports = userModel;
+
+export default productModel

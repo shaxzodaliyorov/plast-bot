@@ -1,4 +1,5 @@
-const { model, Schema } = require('mongoose')
+
+import {model, Schema} from "mongoose"
 
 const userSchame =  new Schema({
     fullName:{
@@ -7,7 +8,8 @@ const userSchame =  new Schema({
     },
     phone:{
         type:Number,
-        required:true
+        required:true,
+        unique: true,
     },
     basket:{
         type:Schema.Types.ObjectId,
@@ -19,4 +21,4 @@ const userSchame =  new Schema({
 
 const userModel = model('users', userSchame);
 
-module.exports = userModel;
+export default userModel
