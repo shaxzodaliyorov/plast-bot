@@ -5,6 +5,9 @@ const productSchame =  new Schema({
     },
     price:{
         type:String
+    },
+    buyedCount:{
+        type:number
     }
 },
 { timestamps: true }
